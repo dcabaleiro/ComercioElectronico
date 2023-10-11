@@ -27,7 +27,7 @@ public class PricesController implements PricesDAO {
     }
 
     @Override
-    @PostMapping(value = "/searchprice", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/price", consumes = "application/json", produces = "application/json")
     @Retry(name = "estandar", fallbackMethod = "ErrorSearchPrice")
     public ResponseEntity<SearchPricesResponseBean> searchPrice(@RequestBody SearchPricesRequestBean searchPricesRequestBean) {
         System.out.println("searchPricesRequestBean = " + searchPricesRequestBean);
