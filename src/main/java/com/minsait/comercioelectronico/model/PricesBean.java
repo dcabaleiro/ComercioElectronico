@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Entity
 public class PricesBean {
+
     @Column
     int brand_id;
 
