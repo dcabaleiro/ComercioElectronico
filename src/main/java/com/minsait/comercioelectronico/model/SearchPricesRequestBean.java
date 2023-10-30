@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SearchPricesRequestBean {
 
-    public String date;
-    public int productId;
-    public int brandId;
+    private String date;
+    private int productId;
+    private int brandId;
 }

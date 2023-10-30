@@ -4,16 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchPricesResponseBean {
+public class PricesModel {
 
-    private int productId;
+    private int id;
     private int brandId;
+    private Timestamp startDate;
+    private Timestamp endDate;
     private int priceList;
-    private String startDate;
-    private String endDate;
+    private int productId;
+    private int priority;
     private Double price;
-
+    private String curr;
 }

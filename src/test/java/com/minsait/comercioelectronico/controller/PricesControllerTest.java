@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 
 @SpringBootTest
@@ -27,10 +26,17 @@ class PricesControllerTest {
         test.put("productId", 35455);
         test.put("brandId", 1);
 
-        MvcResult result = this.mockMvc.perform(post("/price").contentType(MediaType.APPLICATION_JSON).content(test.toString())).andReturn();
+        MvcResult result = this.mockMvc.perform(get(
+                "/price?"
+                        + "fecha=" + test.get("date")
+                        + "&productId=" +test.get("productId")
+                        + "&brandId=" + test.get("brandId")
+                ))
+                .andReturn();
         JSONObject body = new JSONObject(result.getResponse().getContentAsString());
         Assertions.assertEquals(body.getDouble("price"), 35.5);
-        Assertions.assertEquals(body.getInt("price_list"), 1);
+        Assertions.assertEquals(body.getInt("brandId"), 1);
+        Assertions.assertEquals(body.getInt("priceList"), 1);
         Assertions.assertEquals(result.getResponse().getStatus(), 200);
     }
 
@@ -41,11 +47,17 @@ class PricesControllerTest {
         test.put("productId", 35455);
         test.put("brandId", 1);
 
-        MvcResult result = this.mockMvc.perform(post("/price").contentType(MediaType.APPLICATION_JSON).content(test.toString())).andReturn();
+        MvcResult result = this.mockMvc.perform(get(
+                        "/price?"
+                                + "fecha=" + test.get("date")
+                                + "&productId=" +test.get("productId")
+                                + "&brandId=" + test.get("brandId")
+                ))
+                .andReturn();
         JSONObject body = new JSONObject(result.getResponse().getContentAsString());
         Assertions.assertEquals(body.getDouble("price"), 25.45);
-        Assertions.assertEquals(body.getInt("brand_id"), 1);
-        Assertions.assertEquals(body.getInt("price_list"), 2);
+        Assertions.assertEquals(body.getInt("brandId"), 1);
+        Assertions.assertEquals(body.getInt("priceList"), 2);
         Assertions.assertEquals(result.getResponse().getStatus(), 200);
     }
 
@@ -56,11 +68,17 @@ class PricesControllerTest {
         test.put("productId", 35455);
         test.put("brandId", 1);
 
-        MvcResult result = this.mockMvc.perform(post("/price").contentType(MediaType.APPLICATION_JSON).content(test.toString())).andReturn();
+        MvcResult result = this.mockMvc.perform(get(
+                        "/price?"
+                                + "fecha=" + test.get("date")
+                                + "&productId=" +test.get("productId")
+                                + "&brandId=" + test.get("brandId")
+                ))
+                .andReturn();
         JSONObject body = new JSONObject(result.getResponse().getContentAsString());
         Assertions.assertEquals(body.getDouble("price"), 35.5);
-        Assertions.assertEquals(body.getInt("brand_id"), 1);
-        Assertions.assertEquals(body.getInt("price_list"), 1);
+        Assertions.assertEquals(body.getInt("brandId"), 1);
+        Assertions.assertEquals(body.getInt("priceList"), 1);
         Assertions.assertEquals(result.getResponse().getStatus(), 200);
     }
 
@@ -71,11 +89,17 @@ class PricesControllerTest {
         test.put("productId", 35455);
         test.put("brandId", 1);
 
-        MvcResult result = this.mockMvc.perform(post("/price").contentType(MediaType.APPLICATION_JSON).content(test.toString())).andReturn();
+        MvcResult result = this.mockMvc.perform(get(
+                        "/price?"
+                                + "fecha=" + test.get("date")
+                                + "&productId=" +test.get("productId")
+                                + "&brandId=" + test.get("brandId")
+                ))
+                .andReturn();
         JSONObject body = new JSONObject(result.getResponse().getContentAsString());
         Assertions.assertEquals(body.getDouble("price"), 30.5);
-        Assertions.assertEquals(body.getInt("brand_id"), 1);
-        Assertions.assertEquals(body.getInt("price_list"), 3);
+        Assertions.assertEquals(body.getInt("brandId"), 1);
+        Assertions.assertEquals(body.getInt("priceList"), 3);
         Assertions.assertEquals(result.getResponse().getStatus(), 200);
     }
 
@@ -86,11 +110,16 @@ class PricesControllerTest {
         test.put("productId", 35455);
         test.put("brandId", 1);
 
-        MvcResult result = this.mockMvc.perform(post("/price").contentType(MediaType.APPLICATION_JSON).content(test.toString())).andReturn();
-        JSONObject body = new JSONObject(result.getResponse().getContentAsString());
+        MvcResult result = this.mockMvc.perform(get(
+                        "/price?"
+                                + "fecha=" + test.get("date")
+                                + "&productId=" +test.get("productId")
+                                + "&brandId=" + test.get("brandId")
+                ))
+                .andReturn();        JSONObject body = new JSONObject(result.getResponse().getContentAsString());
         Assertions.assertEquals(body.getDouble("price"), 38.95);
-        Assertions.assertEquals(body.getInt("brand_id"), 1);
-        Assertions.assertEquals(body.getInt("price_list"), 4);
+        Assertions.assertEquals(body.getInt("brandId"), 1);
+        Assertions.assertEquals(body.getInt("priceList"), 4);
         Assertions.assertEquals(result.getResponse().getStatus(), 200);
     }
 
