@@ -9,4 +9,6 @@ public interface PricesService {
     PricesModel searchPriceByDateProductIdAndBrandId(Date date, int productId, int brandId);
 
     PricesModel searchPriceWithJPQL(Date date, int productId, int brandId);
+
+    PricesModel searchPriceWithJPQLAndQP(Date date, int productId, int brandId);
 }

@@ -2,7 +2,7 @@ package com.minsait.comercioelectronico.controller;
 
 import com.minsait.comercioelectronico.mappers.PricesMapper;
 import com.minsait.comercioelectronico.model.SearchPricesResponseBean;
-import com.minsait.comercioelectronico.service.PricesServiceImpl;
+import com.minsait.comercioelectronico.service.PricesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,19 +19,26 @@ import java.util.Date;
 public class PricesController {
 
     @Autowired
-    private PricesServiceImpl pricesServiceImpl;
+    private PricesService pricesService;
 
     @GetMapping(value = "/price", produces = "application/json")
     public ResponseEntity<SearchPricesResponseBean> searchPrice(@RequestParam(name = "fecha", value = "fecha") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date, @RequestParam(name = "productId", value = "productId") int productId, @RequestParam(name = "brandId", value = "brandId") int brandId) {
         SearchPricesResponseBean searchPricesResponseBean = PricesMapper.pricesMapper
-                .PricesModelToSearchPricesResponseBean(pricesServiceImpl.searchPriceByDateProductIdAndBrandId(date, productId, brandId));
+                .PricesModelToSearchPricesResponseBean(pricesService.searchPriceByDateProductIdAndBrandId(date, productId, brandId));
         return new ResponseEntity<SearchPricesResponseBean>(searchPricesResponseBean,HttpStatus.OK);
     }
 
     @GetMapping(value = "/pricejpql", produces = "application/json")
     public ResponseEntity<SearchPricesResponseBean> searchPriceWithJQPL(@RequestParam(name = "fecha", value = "fecha") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date, @RequestParam(name = "productId", value = "productId") int productId, @RequestParam(name = "brandId", value = "brandId") int brandId) {
         SearchPricesResponseBean searchPricesResponseBean = PricesMapper.pricesMapper
-                .PricesModelToSearchPricesResponseBean(pricesServiceImpl.searchPriceWithJPQL(date, productId, brandId));
+                .PricesModelToSearchPricesResponseBean(pricesService.searchPriceWithJPQL(date, productId, brandId));
+        return new ResponseEntity<SearchPricesResponseBean>(searchPricesResponseBean,HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/pricejpqlwithqp", produces = "application/json")
+    public ResponseEntity<SearchPricesResponseBean> searchPriceWithJQPLWithQP(@RequestParam(name = "fecha", value = "fecha") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date, @RequestParam(name = "productId", value = "productId") int productId, @RequestParam(name = "brandId", value = "brandId") int brandId) {
+        SearchPricesResponseBean searchPricesResponseBean = PricesMapper.pricesMapper
+                .PricesModelToSearchPricesResponseBean(pricesService.searchPriceWithJPQLAndQP(date, productId, brandId));
         return new ResponseEntity<SearchPricesResponseBean>(searchPricesResponseBean,HttpStatus.OK);
     }
 }

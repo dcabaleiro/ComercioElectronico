@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.Date;
 
 import static com.minsait.comercioelectronico.mappers.PricesMapper.pricesMapper;
@@ -18,6 +21,9 @@ public class PricesServiceImpl implements PricesService{
 
     @Autowired
     private PricesRepository pricesRepository;
+
+    @PersistenceContext
+    private EntityManager em;
 
     public PricesEntity searchPrices(String date, int productId, int brandId) {
 
@@ -43,5 +49,15 @@ public class PricesServiceImpl implements PricesService{
             throw new NotFoundException();
         }
         return pricesMapper.PricesEntitytoPricesModel(price);
+    }
+
+    @Override
+    public PricesModel searchPriceWithJPQLAndQP(Date date, int productId, int brandId) {
+        TypedQuery<PricesEntity> query = em.createQuery("select p from PricesEntity p where startDate < :date and endDate > :date and productId = :productId and brandId = :brandId", PricesEntity.class);
+        return pricesMapper.PricesEntitytoPricesModel(query
+                .setParameter("date", date)
+                .setParameter("productId", productId)
+                .setParameter("brandId", brandId)
+                .getSingleResult());
     }
 }
