@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Date;
+import java.util.List;
 
 import static com.minsait.comercioelectronico.mappers.PricesMapper.pricesMapper;
 
@@ -44,11 +45,11 @@ public class PricesServiceImpl implements PricesService{
 
     @Override
     public PricesModel searchPriceWithJPQL(Date date, int productId, int brandId) {
-        PricesEntity price = pricesRepository.searchPriceWithJPQL(date, productId, brandId);
-        if (price == null){
+        List<PricesEntity> price = pricesRepository.searchPriceWithJPQL(date, productId, brandId);
+        if (price.isEmpty()){
             throw new NotFoundException();
         }
-        return pricesMapper.PricesEntitytoPricesModel(price);
+        return pricesMapper.PricesEntitytoPricesModel(price.get(0));
     }
 
     @Override
@@ -58,6 +59,7 @@ public class PricesServiceImpl implements PricesService{
                 .setParameter("date", date)
                 .setParameter("productId", productId)
                 .setParameter("brandId", brandId)
+                .setMaxResults(1)
                 .getSingleResult());
     }
 }

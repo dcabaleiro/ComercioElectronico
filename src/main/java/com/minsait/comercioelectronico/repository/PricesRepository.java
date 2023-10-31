@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface PricesRepository extends JpaRepository<PricesEntity,Integer> {
@@ -15,6 +16,6 @@ public interface PricesRepository extends JpaRepository<PricesEntity,Integer> {
 
     PricesEntity findFirstByStartDateLessThanAndEndDateGreaterThanAndProductIdAndBrandIdOrderByPriorityDesc(Date startDate, Date endDate, int productId, int brandId);
 
-    @Query("select p from PricesEntity p where startDate < :date and endDate > :date and productId = :productId and brandId = :brandId")
-    PricesEntity searchPriceWithJPQL(@Param("date") Date date, @Param("productId") int productId, @Param("brandId") int brandId);
+    @Query("select p from PricesEntity p where startDate < :date and endDate > :date and productId = :productId and brandId = :brandId order by priority desc, price desc")
+    List<PricesEntity> searchPriceWithJPQL(@Param("date") Date date, @Param("productId") int productId, @Param("brandId") int brandId);
 }
